@@ -1,0 +1,45 @@
+version: '3.10'
+
+services:
+  web:
+    build: .
+    container_name: todo-web
+    expose:
+      - "7860"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      - GOOGLE_APPLICATION_CREDENTIALS=/tmp/keys/application_default_credentials.json
+    env_file:
+      - env_todo2/.env
+    volumes:
+      - .:/app # Optional: for hot reloading if you run uvicorn inside docker with --reload
+      - ~/AppData/Roaming/gcloud/application_default_credentials.json:/tmp/keys/application_default_credentials.json:ro
+
+  db:
+    image: postgres:15-alpine
+    env_file:
+      - env_todo2/.env
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ritz -d todo2_db" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  nginx:
+    image: nginx:alpine
+    container_name: todo-nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - web
+
+volumes:
+  postgres_data:

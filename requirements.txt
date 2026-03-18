@@ -1,0 +1,5 @@
+fastapi[all]
+SQLAlchemy
+pydantic
+firebase-admin
+psycopg2-binary

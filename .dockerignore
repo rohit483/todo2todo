@@ -1,0 +1,11 @@
+env_todo2/
+__pycache__/
+*.db
+.pytest_cache/
+.git/
+.github/
+.vscode/
+.gitignore
+.dockerignore
+firebase_auth_guide.md
+README.md

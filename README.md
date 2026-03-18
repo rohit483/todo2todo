@@ -1,3 +1,11 @@
+---
+title: Todo App
+emoji: 🚀
+colorFrom: blue
+colorTo: green
+sdk: docker
+pinned: false
+---
 # TODO2
 Todo app with FastAPI + REST API + Sqlite + Firebase Google Auth
 

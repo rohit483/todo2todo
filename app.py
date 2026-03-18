@@ -1,5 +1,6 @@
 from typing import List
 import os
+import json
 from pathlib import Path
 from fastapi import FastAPI, Depends, HTTPException, Request, status
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
@@ -114,7 +115,16 @@ def get_db():
 # --- Firebase Auth Setup ---
 if not firebase_admin._apps:
     try:
-        firebase_admin.initialize_app(options={'projectId': 'todo-e8628'})
+        # Check if we have the Hugging Face secret injected as an environment variable
+        firebase_creds_json = os.getenv("FIREBASE_CREDENTIALS")
+        if firebase_creds_json:
+            # Parse the JSON string from the secret and create a certificate
+            cred_dict = json.loads(firebase_creds_json)
+            cred = credentials.Certificate(cred_dict)
+            firebase_admin.initialize_app(cred)
+        else:
+            # Fallback to local application default credentials
+            firebase_admin.initialize_app(options={'projectId': 'todo-e8628'})
     except Exception as e:
         print(f"Warning: Failed to initialize Firebase Admin SDK: {e}")
 

@@ -327,3 +327,64 @@ li.completed span {
 .delete:hover {
     background-color: #fee2e2;
 }
+
+/* --- Mobile Responsiveness --- */
+@media (max-width: 600px) {
+    body {
+        padding: 20px 12px;
+    }
+
+    /* Stack header elements */
+    .header-right {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        margin-top: 8px;
+        width: 100%;
+    }
+
+    #user-info {
+        margin-right: 0;
+        margin-bottom: 4px;
+        text-align: center;
+        word-break: break-all;
+    }
+    
+    #delete-account-btn {
+        margin-left: 0 !important;
+    }
+
+    /* Stack the Add Task form */
+    .form-container {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    #add-btn {
+        width: 100%;
+        padding: 14px;
+    }
+
+    /* Adjust Todo items to stack vertically */
+    li {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 14px;
+    }
+
+    li span {
+        margin-right: 0;
+        width: 100%;
+    }
+
+    .actions {
+        width: 100%;
+        justify-content: flex-end;
+    }
+    
+    .update, .delete {
+        flex: 1; /* Make action buttons equal width on very small screens */
+    }
+}
